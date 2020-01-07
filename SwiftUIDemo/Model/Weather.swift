@@ -11,10 +11,11 @@ import Overture
 import ReactiveSwift
 
 struct Weather: Codable, Equatable {
-    let coor: Coordinate
+    let coord: Coordinate
     let weather: [WeatherDescription]
     let main: Main
     let sys: Sys
+    let name: String
     
     static func == (lhs: Weather, rhs: Weather) -> Bool {
         let idsEqual = lhs.sys.id == rhs.sys.id
@@ -45,20 +46,20 @@ struct Main: Codable {
 }
 
 extension Main {
-    var tempLow: Float {
-        return kelvinToFahrenheit(temp_min)
+    var tempLow: Int {
+        return Int(kelvinToFahrenheit(temp_min))
     }
     
-    var tempHigh: Float {
-        return kelvinToFahrenheit(temp_max)
+    var tempHigh: Int {
+        return Int(kelvinToFahrenheit(temp_max))
     }
     
-    var tempCurrent: Float {
-        return kelvinToFahrenheit(temp)
+    var tempCurrent: Int {
+        return Int(kelvinToFahrenheit(temp))
     }
     
-    var feelsLikeTemp: Float {
-        return kelvinToFahrenheit(feels_like)
+    var feelsLikeTemp: Int {
+        return Int(kelvinToFahrenheit(feels_like))
     }
     
     private var kelvinToFahrenheit: (Float) -> Float {

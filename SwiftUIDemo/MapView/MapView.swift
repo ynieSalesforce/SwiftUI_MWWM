@@ -11,7 +11,8 @@ import MapKit
 import CoreLocation
 
 struct MapView: UIViewRepresentable {
-    var delegate: MapDelegate
+    var delegate: MapDelegate?
+    var location: Coordinate?
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView(frame: .zero)
@@ -20,14 +21,14 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
+        guard let location = location else { return }
         let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
-        let mockCoordinate = CLLocationCoordinate2D.init(latitude: 37.91531, longitude: -75.383212)
-        let region = MKCoordinateRegion(center: mockCoordinate, span: span)
+        let coordinate = CLLocationCoordinate2D.init(latitude: CLLocationDegrees(location.lat), longitude: CLLocationDegrees(location.lon))
+        let region = MKCoordinateRegion(center: coordinate, span: span)
         uiView.setRegion(region, animated: true)
         
         let annotation = MKPointAnnotation()
-        annotation.coordinate = mockCoordinate
-        annotation.title = "Chincoteague"
+        annotation.coordinate = coordinate
         uiView.addAnnotation(annotation)
     }
     

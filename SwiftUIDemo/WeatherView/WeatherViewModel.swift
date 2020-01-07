@@ -11,7 +11,7 @@ import ReactiveSwift
 
 public struct WeatherViewModel {
     public struct Input {
-        var zipcode: MutableProperty<String>
+        var zipcode: String
         var lifeCycle: ViewLifeCycle
     }
     
@@ -27,15 +27,16 @@ private func createViewModel(input: WeatherViewModel.Input) -> WeatherViewModel.
     let scheduler = Environment.current.scheduler
     let onLoad = input.lifeCycle.viewDidLoadProperty.signal.observe(on: scheduler)
     
-    var zipcode: String?
-    input.zipcode.signal.observe(on: Environment.current.scheduler)
-        .observeValues{zipcode = $0}
+//    var zipcode: String?
+//    input.zipcode.signal.observe(on: Environment.current.scheduler)
+//        .observeValues{zipcode = $0}
     
-    let criteriaForLoad = onLoad.flatMap(.latest, const(input.zipcode.signal.observe(on: scheduler)))
-        .map { input in
-            LoadCriteria(endPoint: .Weather(zipcode: zipcode!),
+    let criteriaForLoad = onLoad
+        .map { _ in
+            LoadCriteria(endPoint: .Weather(zipcode: input.zipcode),
                          decoder: ResponseDecoder<Weather>.decodable)
     }
+    
     let (onLoadIndicator, data) = mapWithIndicator(criteriaForLoad.map(loadData))
     return .init(weather: data, dataIsLoading: onLoadIndicator)
 }
