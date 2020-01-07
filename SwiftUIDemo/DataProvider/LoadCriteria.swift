@@ -26,7 +26,7 @@ extension EndPoint {
     var url: URL? {
         switch self {
         case .Weather(let zipCode):
-            return buildURL(.http, "api.openweathermap.org", "data/2.5/weather", ["zip": "\(zipCode),us"])
+            return buildURL(.http, "api.openweathermap.org", "/data/2.5/weather", ["zip": "\(zipCode),us", "APPID": appID])
         }
     }
     
@@ -40,5 +40,9 @@ extension EndPoint {
             components.queryItems = urlQueryItems
         }
         return components.url
+    }
+    
+    private var appID: String {
+        return Bundle.main.object(forInfoDictionaryKey: "APP ID") as? String ?? ""
     }
 }

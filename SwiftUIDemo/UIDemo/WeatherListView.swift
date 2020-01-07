@@ -29,7 +29,9 @@ struct WeatherListView: View {
                 }
                 
                 ForEach(storedLocations.store) { location in
-                    LocationRow(location: location)
+                    NavigationLink(destination: WeatherContainer(zipcode: location.zipcode, weather: nil)) {
+                        LocationRow(location: location)
+                    }
                 }
                 
             }.navigationBarTitle(Text("Locations"))

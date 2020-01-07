@@ -1,0 +1,12 @@
+//
+//  Debug.xcconfig
+//  SwiftUIDemo
+//
+//  Created by Yuchen Nie on 1/7/20.
+//  Copyright © 2020 Yuchen Nie. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+APPID = DEMO1
