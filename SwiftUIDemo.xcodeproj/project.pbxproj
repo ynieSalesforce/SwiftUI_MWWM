@@ -139,13 +139,14 @@
 			children = (
 				9B53CD4B23C5362400615897 /* DyanmicWeather */,
 				9B9F091923C3B58600B6A04F /* MapView */,
-				9BC581E023C126B600779E07 /* UIDemo */,
+				9BC581E023C126B600779E07 /* WeatherList */,
 				9B60426623BFACAB009F5C23 /* Reactive */,
 				9B60426123BF9363009F5C23 /* Base */,
 				9B60425823BEBA53009F5C23 /* WeatherView */,
 				9B32ADE323BBB08F00BBEB02 /* DataProvider */,
 				9B32ADE023BBB06900BBEB02 /* Model */,
 				9B0B5CBF23B8405300A1ED65 /* AppDelegate.swift */,
+				9B0B5CC123B8405300A1ED65 /* SceneDelegate.swift */,
 				9B0B5CC523B8405400A1ED65 /* Assets.xcassets */,
 				9B0B5CCA23B8405400A1ED65 /* LaunchScreen.storyboard */,
 				9B0B5CCD23B8405400A1ED65 /* Info.plist */,
@@ -248,14 +249,13 @@
 			path = WeatherInfo;
 			sourceTree = "<group>";
 		};
-		9BC581E023C126B600779E07 /* UIDemo */ = {
+		9BC581E023C126B600779E07 /* WeatherList */ = {
 			isa = PBXGroup;
 			children = (
-				9B0B5CC123B8405300A1ED65 /* SceneDelegate.swift */,
 				9B0B5CC323B8405300A1ED65 /* WeatherListView.swift */,
 				9B014A0323C42566000A5395 /* LocationRow.swift */,
 			);
-			path = UIDemo;
+			path = WeatherList;
 			sourceTree = "<group>";
 		};
 		B1839DA046AD471A6DFC1C34 /* Frameworks */ = {
