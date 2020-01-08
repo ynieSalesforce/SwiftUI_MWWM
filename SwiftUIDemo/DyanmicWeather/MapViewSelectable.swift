@@ -22,7 +22,10 @@ struct MapViewSelectable: UIViewRepresentable {
     }
 
     func updateUIView(_ view: MKMapView, context: Context) {
-        print("updating")
+        view.removeAnnotations(view.annotations)
+        let coordinate = Coordinate.init(lon: Float(view.centerCoordinate.longitude),
+                                         lat: Float(view.centerCoordinate.latitude))
+        updateMapview(view, location: coordinate)
     }
 
     func makeCoordinator() -> Coordinator {
