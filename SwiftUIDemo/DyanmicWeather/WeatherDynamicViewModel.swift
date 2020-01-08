@@ -1,17 +1,17 @@
 //
-//  WeatherViewModel.swift
+//  WeatherDynamicViewModel.swift
 //  SwiftUIDemo
 //
-//  Created by Yuchen Nie on 1/3/20.
+//  Created by Yuchen Nie on 1/7/20.
 //  Copyright © 2020 Yuchen Nie. All rights reserved.
 //
 
 import Foundation
 import ReactiveSwift
 
-public struct WeatherViewModel {
+public struct WeatherDynamicViewModel {
     public struct Input {
-        var zipcode: String
+        var zipcode: MutableProperty<String>
         var lifeCycle: ViewLifeCycle
     }
     
@@ -23,13 +23,19 @@ public struct WeatherViewModel {
     static var create = createViewModel
 }
 
-private func createViewModel(input: WeatherViewModel.Input) -> WeatherViewModel.Output {
+private func createViewModel(input: WeatherDynamicViewModel.Input) -> WeatherDynamicViewModel.Output {
     let scheduler = Environment.current.scheduler
     let onLoad = input.lifeCycle.viewDidLoadProperty.signal.observe(on: scheduler)
     
+//    var zipcode: String?
+//    input.zipcode.signal.observe(on: Environment.current.scheduler)
+//        .observeValues{zipcode = $0}
+    
     let criteriaForLoad = onLoad
-        .map { _ in
-            LoadCriteria(endPoint: .Weather(zipcode: input.zipcode),
+        .flatMap(.latest, const(input.zipcode.signal.observe(on: scheduler)))
+        .filter({ !$0.isEmpty })
+        .map { zipcode in
+            LoadCriteria(endPoint: .Weather(zipcode: zipcode),
                          decoder: ResponseDecoder<Weather>.decodable)
     }
     

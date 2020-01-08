@@ -22,10 +22,9 @@ struct WeatherListView: View {
         NavigationView {
             List {
                 HStack {
-                    NavigationLink(destination: MapContainerView(mapDelegate: mapDelegate)) {
-                        Text("Add Location")
+                    NavigationLink(destination: WeatherDynamicContainer()) {
+                        Text("Select from Map")
                     }
-                    Spacer()
                 }
                 
                 ForEach(storedLocations.store) { location in
