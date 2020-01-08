@@ -15,9 +15,8 @@ struct WeatherInfoView: View {
         VStack {
             Text(weather.name).font(.title).fontWeight(.semibold)
             Text(weather.weather[0].description).font(.body)
-            MapView().frame(height: 350)
-//            MapView(delegate: nil, location: weather.coord)
-//                .frame(height: 350)
+            MapView(delegate: nil, location: weather.coord)
+                .frame(height: 350)
             WeatherInfoStack(weather: weather)
             Spacer()
         }

@@ -19,13 +19,10 @@ struct WeatherDynamicContainer: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                Button.init("Retrieve Weather") {
-                    
-                }
-            }
-            MapViewSelectable().frame(height: 350)
+            loadHeaderView(from: weather)
+            MapViewSelectable(viewDidUpdate: { coordinate -> Void in
+                self.loadLocation(from: coordinate)
+            }, initialCoordinate: Coordinate(lon: -77.0369, lat: 38.9072)).frame(height: 350)
 
             loadWeatherView(from: weather)
             Spacer()
@@ -34,9 +31,24 @@ struct WeatherDynamicContainer: View {
     
     private func loadWeatherView(from weather: Weather?) -> AnyView{
         guard let weather = weather else {
-            return AnyView(Text("Drag map to select location"))
+            return AnyView(Text("Drag map to get weather"))
         }
         return AnyView(WeatherInfoStack(weather: weather))
+    }
+    
+    private func loadHeaderView(from weather: Weather?) -> AnyView {
+        guard let weather = weather else {
+            return AnyView(Text("Map").font(.title).fontWeight(.semibold))
+        }
+        return AnyView(
+            VStack {
+                Text(weather.name)
+                    .font(.title).fontWeight(.semibold)
+                    
+                Text(weather.weather[0].description)
+                    .font(.subheadline).fontWeight(.semibold)
+            }
+        )
     }
     
     private func loadLocation(from coordinate: CLLocationCoordinate2D) {

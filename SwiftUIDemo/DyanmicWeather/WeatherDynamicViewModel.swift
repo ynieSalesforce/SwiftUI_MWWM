@@ -34,6 +34,7 @@ private func createViewModel(input: WeatherDynamicViewModel.Input) -> WeatherDyn
     let criteriaForLoad = onLoad
         .flatMap(.latest, const(input.zipcode.signal.observe(on: scheduler)))
         .filter({ !$0.isEmpty })
+        .debounce(2, on: scheduler)
         .map { zipcode in
             LoadCriteria(endPoint: .Weather(zipcode: zipcode),
                          decoder: ResponseDecoder<Weather>.decodable)
