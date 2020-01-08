@@ -17,11 +17,20 @@ struct MapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView(frame: .zero)
         mapView.delegate = delegate
+        
+        if let location = location {
+            updateMapview(mapView, location: location)
+        }
+        
         return mapView
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
         guard let location = location else { return }
+        updateMapview(uiView, location: location)
+    }
+    
+    private func updateMapview(_ uiView: MKMapView, location: Coordinate) {
         let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
         let coordinate = CLLocationCoordinate2D.init(latitude: CLLocationDegrees(location.lat), longitude: CLLocationDegrees(location.lon))
         let region = MKCoordinateRegion(center: coordinate, span: span)
@@ -31,7 +40,6 @@ struct MapView: UIViewRepresentable {
         annotation.coordinate = coordinate
         uiView.addAnnotation(annotation)
     }
-    
 }
 
 class MapDelegate: NSObject, MKMapViewDelegate {
@@ -41,7 +49,12 @@ class MapDelegate: NSObject, MKMapViewDelegate {
         super.init()
     }
     
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        let coordinate = mapView.centerCoordinate
+        self.updateAction(coordinate)
+    }
+    
+    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         let coordinate = mapView.centerCoordinate
         self.updateAction(coordinate)
     }
