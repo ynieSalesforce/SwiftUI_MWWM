@@ -16,4 +16,4 @@ Once you have your API Key, open `Debug.xcconfig` file, and replace DEMO# with y
 1. [Reactive Swift](https://github.com/ReactiveCocoa/ReactiveSwift)
 2. [Point Free](https://www.pointfree.co/)
 3. [Apple's SwiftUI Tutorial](https://developer.apple.com/tutorials/swiftui/tutorials)
-4. (SwiftUI Map Tutorial)[https://www.hackingwithswift.com/books/ios-swiftui/advanced-mkmapview-with-swiftui]
+4. [SwiftUI Map Tutorial](https://www.hackingwithswift.com/books/ios-swiftui/advanced-mkmapview-with-swiftui)
