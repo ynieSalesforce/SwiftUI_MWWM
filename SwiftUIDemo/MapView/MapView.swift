@@ -17,28 +17,12 @@ struct MapView: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView(frame: .zero)
         mapView.delegate = delegate
-        
-        if let location = location {
-            updateMapview(mapView, location: location)
-        }
-        
         return mapView
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
         guard let location = location else { return }
         updateMapview(uiView, location: location)
-    }
-    
-    private func updateMapview(_ uiView: MKMapView, location: Coordinate) {
-        let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
-        let coordinate = CLLocationCoordinate2D.init(latitude: CLLocationDegrees(location.lat), longitude: CLLocationDegrees(location.lon))
-        let region = MKCoordinateRegion(center: coordinate, span: span)
-        uiView.setRegion(region, animated: true)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        uiView.addAnnotation(annotation)
     }
 }
 
@@ -58,6 +42,17 @@ class MapDelegate: NSObject, MKMapViewDelegate {
         let coordinate = mapView.centerCoordinate
         self.updateAction(coordinate)
     }
+}
+
+func updateMapview(_ uiView: MKMapView, location: Coordinate) {
+    let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
+    let coordinate = CLLocationCoordinate2D.init(latitude: CLLocationDegrees(location.lat), longitude: CLLocationDegrees(location.lon))
+    let region = MKCoordinateRegion(center: coordinate, span: span)
+    uiView.setRegion(region, animated: true)
+    
+    let annotation = MKPointAnnotation()
+    annotation.coordinate = coordinate
+    uiView.addAnnotation(annotation)
 }
 
 struct MapView_Previews: PreviewProvider {

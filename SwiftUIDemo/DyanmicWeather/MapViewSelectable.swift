@@ -11,11 +11,13 @@ import SwiftUI
 import MapKit
 
 struct MapViewSelectable: UIViewRepresentable {
-    @State private var centerCoordinate = CLLocationCoordinate2D()
+    var viewDidUpdate: ((CLLocationCoordinate2D) -> Void)
+    var initialCoordinate: Coordinate
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
+        updateMapview(mapView, location: initialCoordinate)
         return mapView
     }
 
@@ -35,7 +37,7 @@ struct MapViewSelectable: UIViewRepresentable {
         }
         
         func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-            parent.centerCoordinate = mapView.centerCoordinate
+            parent.viewDidUpdate(mapView.centerCoordinate)
         }
     }
 }
