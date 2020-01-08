@@ -3,15 +3,15 @@
 use_frameworks!
 
 def sharedPods
-  pod 'Alamofire'
-  pod 'Overture'
-  pod 'ReactiveSwift'
-  pod 'ReactiveCocoa'
+  pod 'Alamofire', '~> 4.9.1'
+  pod 'Overture', '~> 0.5.0'
+  pod 'ReactiveSwift', '~> 6.2.0'
 end
 
 def testingPods
-  pod 'Quick'
-  pod 'Nimble'
+  pod 'Quick', '~> 2.2.0'
+  pod 'Nimble', '~> 6.0.0'
+  pod 'Dobby', '~> 0.6'
 end
 
 target 'SwiftUIDemo' do
