@@ -10,7 +10,7 @@ Once the project has been downloaded, run: `pod install`. Then open the workspac
 
 Navigate to [Open Weather Map](https://openweathermap.org/), and sign up for a free account.
 
-Once you have your API Key, open `Debug.xcconfig` file, and replace DEMO# with your API Key
+Once you have your API Key, open `Debug.xcconfig` file, and replace `DEMO#` with your API Key
 
 ## Resouces:
 1. [Reactive Swift](https://github.com/ReactiveCocoa/ReactiveSwift)
