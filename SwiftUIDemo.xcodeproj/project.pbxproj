@@ -73,11 +73,11 @@
 		9B32ADE623BBC3B200BBEB02 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		9B32ADE923BBECAA00BBEB02 /* LoadCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadCriteria.swift; sourceTree = "<group>"; };
 		9B32ADEB23BBEE2400BBEB02 /* DataLoadingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoadingError.swift; sourceTree = "<group>"; };
-		9B53CD4823C533A500615897 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		9B53CD4923C5341300615897 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		9B53CD4C23C5442A00615897 /* WeatherDynamicContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDynamicContainer.swift; sourceTree = "<group>"; };
 		9B53CD4E23C5609800615897 /* WeatherDynamicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDynamicViewModel.swift; sourceTree = "<group>"; };
 		9B53CD5123C56B9E00615897 /* MapViewSelectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewSelectable.swift; sourceTree = "<group>"; };
+		9B53CD5323C5759000615897 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		9B60425D23BF77CA009F5C23 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		9B60425F23BF909D009F5C23 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		9B60426423BFA47A009F5C23 /* ViewLifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLifeCycle.swift; sourceTree = "<group>"; };
@@ -115,8 +115,8 @@
 		9B0B5CB323B8405300A1ED65 = {
 			isa = PBXGroup;
 			children = (
+				9B53CD5323C5759000615897 /* Debug.xcconfig */,
 				9B53CD4923C5341300615897 /* Release.xcconfig */,
-				9B53CD4823C533A500615897 /* Debug.xcconfig */,
 				9B0B5CBE23B8405300A1ED65 /* SwiftUIDemo */,
 				9B0B5CD523B8405400A1ED65 /* SwiftUIDemoTests */,
 				9B0B5CBD23B8405300A1ED65 /* Products */,
@@ -523,7 +523,7 @@
 /* Begin XCBuildConfiguration section */
 		9B0B5CD923B8405400A1ED65 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B53CD4823C533A500615897 /* Debug.xcconfig */;
+			baseConfigurationReference = 9B53CD5323C5759000615897 /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
