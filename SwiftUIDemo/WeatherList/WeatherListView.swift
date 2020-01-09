@@ -10,13 +10,7 @@ import SwiftUI
 import CoreLocation
 
 struct WeatherListView: View {
-    private var mapDelegate: MapDelegate = {
-        let mapDelegate = MapDelegate.init { location in
-            
-        }
-        return mapDelegate
-    }()
-    @EnvironmentObject var storedLocations: LocationStore
+    @State var storedLocations: [Location]
     
     var body: some View {
         NavigationView {
@@ -27,7 +21,7 @@ struct WeatherListView: View {
                     }
                 }
                 
-                ForEach(storedLocations.store) { location in
+                ForEach(storedLocations) { location in
                     NavigationLink(destination: WeatherContainer(zipcode: location.zipcode, weather: nil)) {
                         LocationRow(location: location)
                     }
@@ -42,7 +36,7 @@ struct WeatherListView: View {
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherListView()
+        WeatherListView(storedLocations: [])
     }
 }
 #endif

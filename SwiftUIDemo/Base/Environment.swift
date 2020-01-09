@@ -12,6 +12,7 @@ import ReactiveSwift
 public struct Environment {
     var scheduler: DateScheduler = QueueScheduler(qos: .default, name: "com.salesforce.swiftUIDemo")
     var dataProvider: DataProviderType = AlamoProvider()
+    var locationStore: LocationStoreType = LocationStore.shared
 }
 
 public extension Environment {

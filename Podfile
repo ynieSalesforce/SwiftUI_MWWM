@@ -6,12 +6,12 @@ def sharedPods
   pod 'Alamofire', '~> 4.9.1'
   pod 'Overture', '~> 0.5.0'
   pod 'ReactiveSwift', '~> 6.2.0'
+  pod 'ReactiveCocoa', '~> 10.2.0'
 end
 
 def testingPods
   pod 'Quick', '~> 2.2.0'
-  pod 'Nimble', '~> 6.0.0'
-  pod 'Dobby', '~> 0.6'
+  pod 'Nimble', '~> 8.0.5'
 end
 
 target 'SwiftUIDemo' do

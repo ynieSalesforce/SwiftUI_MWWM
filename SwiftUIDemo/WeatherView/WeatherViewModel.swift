@@ -16,7 +16,8 @@ public struct WeatherViewModel {
     }
     
     public struct Output {
-        var weather: Signal<Weather, DataLoadingError>
+        var weather: Signal<Weather, Never>
+        var errors: Signal<DataLoadingError, Never>
         var dataIsLoading: Signal<Bool, Never>
     }
     
@@ -34,10 +35,10 @@ private func createViewModel(input: WeatherViewModel.Input) -> WeatherViewModel.
     }
     
     let (onLoadIndicator, data) = mapWithIndicator(criteriaForLoad.map(loadData))
-    return .init(weather: data, dataIsLoading: onLoadIndicator)
+    return .init(weather: data.values(), errors: data.errors(), dataIsLoading: onLoadIndicator)
 }
 
-private func loadData<A: Decodable>(criteria: LoadCriteria<A>) -> SignalProducer<A, DataLoadingError>{
+private func loadData<A: Decodable>(criteria: LoadCriteria<A>) -> SignalProducer<Signal<A, DataLoadingError>.Event, Never>{
     let provider = Environment.current.dataProvider
-    return provider.load(criteria)
+    return provider.load(criteria).materialize()
 }

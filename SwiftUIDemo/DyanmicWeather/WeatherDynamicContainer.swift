@@ -16,7 +16,7 @@ struct WeatherDynamicContainer: View {
     let lifeCycle: ViewLifeCycle = ViewLifeCycle()
     
     @State var weather: Weather?
-    
+    @State private var showingErrorAlert = false
     var body: some View {
         VStack {
             loadHeaderView(from: weather)
@@ -27,6 +27,9 @@ struct WeatherDynamicContainer: View {
             loadWeatherView(from: weather)
             Spacer()
         }.onAppear(perform: loadWeather)
+        .alert(isPresented: $showingErrorAlert) {
+            Alert(title: Text("Oh No!"), message: Text("We're so sorry, but it looks like there's something wrong with our servers, check back later!"), dismissButton: .default(Text("Got it!")))
+        }
     }
     
     private func loadWeatherView(from weather: Weather?) -> AnyView{
@@ -63,9 +66,18 @@ struct WeatherDynamicContainer: View {
     }
     
     private func loadWeather() {
-        WeatherDynamicViewModel.create(WeatherDynamicViewModel.Input.init(zipcode: zipcode, lifeCycle: lifeCycle)).weather.on { weather in
-            self.weather = weather
-        }.observeCompleted {}
+        let output = WeatherDynamicViewModel.create(WeatherDynamicViewModel.Input.init(zipcode: zipcode, lifeCycle: lifeCycle))
+            
+        output.weather
+        .observeForControllerAction()
+            .observeValues({ weather in
+                self.weather = weather
+            })
+        
+        output.error.observeForControllerAction()
+            .observeValues { error in
+                self.showingErrorAlert = true
+        }
         lifeCycle.viewDidLoad()
     }
 }

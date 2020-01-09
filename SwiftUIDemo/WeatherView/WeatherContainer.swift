@@ -6,18 +6,24 @@
 //  Copyright © 2020 Yuchen Nie. All rights reserved.
 //
 
+import UIKit
 import SwiftUI
 import ReactiveSwift
+import ReactiveCocoa
 
 struct WeatherContainer: View {
     var zipcode: String
     let lifeCycle: ViewLifeCycle = ViewLifeCycle()
     
     @State var weather: Weather?
+    @State private var showingErrorAlert = false
     var body: some View {
         VStack {
             buildView(with: weather)
         }.onAppear(perform: loadWeather)
+        .alert(isPresented: $showingErrorAlert) {
+            Alert(title: Text("Oh No!"), message: Text("We're so sorry, but it looks like there's something wrong with our servers, check back later!"), dismissButton: .default(Text("Got it!")))
+        }
     }
     
     private func buildView(with weather:Weather?) -> AnyView {
@@ -28,9 +34,18 @@ struct WeatherContainer: View {
     }
     
     private func loadWeather() {
-        WeatherViewModel.create(WeatherViewModel.Input.init(zipcode: zipcode, lifeCycle: lifeCycle)).weather.on { weather in
-            self.weather = weather
-        }.observeCompleted {}
+        let output = WeatherViewModel.create(WeatherViewModel.Input.init(zipcode: zipcode, lifeCycle: lifeCycle))
+        output.weather
+            .observeForControllerAction()
+            .observeValues { weather in
+                self.weather = weather
+        }
+        
+        output.errors
+        .observeForControllerAction()
+            .observeValues { error in
+                self.showingErrorAlert = true
+        }
         lifeCycle.viewDidLoad()
     }
 }

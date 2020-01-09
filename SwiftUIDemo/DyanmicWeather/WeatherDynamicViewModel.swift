@@ -16,7 +16,8 @@ public struct WeatherDynamicViewModel {
     }
     
     public struct Output {
-        var weather: Signal<Weather, DataLoadingError>
+        var weather: Signal<Weather, Never>
+        var error: Signal<DataLoadingError, Never>
         var dataIsLoading: Signal<Bool, Never>
     }
     
@@ -27,24 +28,20 @@ private func createViewModel(input: WeatherDynamicViewModel.Input) -> WeatherDyn
     let scheduler = Environment.current.scheduler
     let onLoad = input.lifeCycle.viewDidLoadProperty.signal.observe(on: scheduler)
     
-//    var zipcode: String?
-//    input.zipcode.signal.observe(on: Environment.current.scheduler)
-//        .observeValues{zipcode = $0}
-    
     let criteriaForLoad = onLoad
         .flatMap(.latest, const(input.zipcode.signal.observe(on: scheduler)))
         .filter({ !$0.isEmpty })
-        .debounce(2, on: scheduler)
+        .debounce(1.25, on: scheduler)
         .map { zipcode in
             LoadCriteria(endPoint: .Weather(zipcode: zipcode),
                          decoder: ResponseDecoder<Weather>.decodable)
     }
     
     let (onLoadIndicator, data) = mapWithIndicator(criteriaForLoad.map(loadData))
-    return .init(weather: data, dataIsLoading: onLoadIndicator)
+    return .init(weather: data.values(), error: data.errors(), dataIsLoading: onLoadIndicator)
 }
 
-private func loadData<A: Decodable>(criteria: LoadCriteria<A>) -> SignalProducer<A, DataLoadingError>{
+private func loadData<A: Decodable>(criteria: LoadCriteria<A>) -> SignalProducer<Signal<A, DataLoadingError>.Event, Never>{
     let provider = Environment.current.dataProvider
-    return provider.load(criteria)
+    return provider.load(criteria).materialize()
 }
