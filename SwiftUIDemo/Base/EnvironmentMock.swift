@@ -13,7 +13,8 @@ import ReactiveSwift
 
 extension Environment {
     static var mock: Environment {
-        Environment(scheduler: TestScheduler(),
+        Environment( config: MockAppConfig(),
+                     scheduler: TestScheduler(),
                     dataProvider: DataProviderMock(),
                     locationStore: LocationStore())
     }
